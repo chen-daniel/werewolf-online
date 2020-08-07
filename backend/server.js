@@ -28,7 +28,7 @@ function Game() {
   this.gameState = {};
 }
 
-app.get('/create-game', (req, res) => {
+app.get('/create-room', (req, res) => {
   const roomCode = generateRoomCode();
   rooms[roomCode] = new Game();
   res.json({room: roomCode})
