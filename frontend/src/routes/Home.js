@@ -23,7 +23,7 @@ function CreateOrJoinRoom({ name }) {
         if (name.length > 0 && roomCodeInput.length === 4) {
             joinRoom(name, roomCodeInput)
                 .then(data => {
-                    setRedirect(`/room/${data.room}`);
+                    setRedirect({ pathname: `room/${data.room}`, state: { name }});
                 });
         }
     }
@@ -31,7 +31,7 @@ function CreateOrJoinRoom({ name }) {
         if (name.length > 0) {
             createRoom(name)
                 .then(data => {
-                    setRedirect(`/room/${data.room}`);
+                    setRedirect({ pathname: `room/${data.room}`, state: { name }});
                 });
         }
     }
