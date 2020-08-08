@@ -1,4 +1,6 @@
 const express = require('express');
+const http = require("http");
+const socket = require('socket.io');
 const app = express();
 const port = process.env.PORT || 8080
 app.set('port', port);
@@ -30,19 +32,20 @@ function generateRoomCode() {
   return result;
 }
 
-function Game() {
-  this.deck = [];
-  this.players = [];
-  this.gameState = {};
+function Room() {
+  this.players = {};
+  this.gameState = undefined;
 }
 
-Game.prototype.addPlayer = function (playerName) {
-  this.players.push(playerName);
+Room.prototype.addPlayer = function (playerName) {
+  if (!this.players[playerName]) {
+    this.players[playerName] = null;
+  }
 }
 
 app.post('/create-room', (req, res) => {
   const roomCode = generateRoomCode();
-  rooms[roomCode] = new Game();
+  rooms[roomCode] = new Room();
   console.log(`Created room ${roomCode}`);
   rooms[roomCode].addPlayer(req.body.name);
   console.log(`Added ${req.body.name} to room ${roomCode}`)
@@ -55,6 +58,30 @@ app.post('/join-room', (req, res) => {
   res.json({ room: req.body.room });
 });
 
-app.listen(port, () => {
+const server = http.createServer(app);
+const io = socket(server);
+
+io.origins('*:*');
+
+io.on("connection", socket => {
+  socket.on("join room", payload => {
+    rooms[payload.room].players[payload.playerName] = socket.id;
+    const players = Object.keys(rooms[payload.room].players);
+    console.log(players);
+    socket.emit("update state", {
+      game: rooms[payload.room].gameState,
+      players: Object.keys(rooms[payload.room].players)
+    });
+    for (let i = 0; i < players.length; i++) {
+      const otherSocket = rooms[payload.room].players[players[i]];
+      socket.to(otherSocket).emit("update state", {
+        game: rooms[payload.room].gameState,
+        players: Object.keys(rooms[payload.room].players)
+      });
+    }
+  })
+});
+
+server.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`)
 })
