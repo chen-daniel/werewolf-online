@@ -52,11 +52,8 @@ export default function GameUI({ state, socketRef, playerName, room }) {
         Game started with deck:
         {JSON.stringify(state.game.deck)}
         <br />
-        Assigned roles:
-        {JSON.stringify(state.game.roles)}
-        <br />
-        Full State:
-        {JSON.stringify(state)}
+        Your role:
+        {state.game.roles.playerRoles[playerName]}
         <br />
         Narration:
         {state.narration}
