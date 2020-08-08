@@ -52,7 +52,7 @@ app.post('/create-room', (req, res) => {
 app.post('/join-room', (req, res) => {
   rooms[req.body.room].addPlayer(req.body.name);
   console.log(`Added ${req.body.name} to room ${req.body.room}`)
-  res.sendStatus(200);
+  res.json({ room: req.body.room });
 });
 
 app.listen(port, () => {

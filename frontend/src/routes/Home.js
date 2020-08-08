@@ -1,5 +1,6 @@
 import React from 'react';
 import { createRoom, joinRoom } from '../utils/api';
+import { Redirect } from 'react-router-dom';
 
 export default function Home() {
     const [nameInput, setNameInput] = React.useState('');
@@ -17,14 +18,21 @@ export default function Home() {
 function CreateOrJoinRoom({ name }) {
     const [viewState, setViewState] = React.useState(0);
     const [roomCodeInput, setRoomCodeInput] = React.useState('');
+    const [redirect, setRedirect] = React.useState(false);
     function handleJoinRoom() {
         if (name.length > 0 && roomCodeInput.length === 4) {
-            joinRoom(name, roomCodeInput);
+            joinRoom(name, roomCodeInput)
+                .then(data => {
+                    setRedirect(`/room/${data.room}`);
+                });
         }
     }
     function handleCreateRoom() {
         if (name.length > 0) {
-            createRoom(name);
+            createRoom(name)
+                .then(data => {
+                    setRedirect(`/room/${data.room}`);
+                });
         }
     }
     function showView(state) {
@@ -50,6 +58,7 @@ function CreateOrJoinRoom({ name }) {
     return (
     <div>
         {showView(viewState)}
+        {redirect && <Redirect to={redirect} />}
     </div>
     );
 }
