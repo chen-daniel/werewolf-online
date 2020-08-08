@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "59184d848dd2568c5167376e6f545c14",
+    "revision": "bec0b3139fefd4ad4f7fd538cfafce22",
     "url": "/werewolf-online/index.html"
   },
   {
-    "revision": "b898e28b02f998cc5866",
+    "revision": "4b1d50fcfde968570337",
     "url": "/werewolf-online/static/css/main.5f361e03.chunk.css"
   },
   {
-    "revision": "575df580fad82754d7e7",
-    "url": "/werewolf-online/static/js/2.d83f385a.chunk.js"
+    "revision": "912e1341eb221154bb81",
+    "url": "/werewolf-online/static/js/2.200c3026.chunk.js"
   },
   {
     "revision": "b67bc97fd0dd67004287af4028afc1b1",
-    "url": "/werewolf-online/static/js/2.d83f385a.chunk.js.LICENSE.txt"
+    "url": "/werewolf-online/static/js/2.200c3026.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "b898e28b02f998cc5866",
-    "url": "/werewolf-online/static/js/main.e0785be6.chunk.js"
+    "revision": "4b1d50fcfde968570337",
+    "url": "/werewolf-online/static/js/main.206868c4.chunk.js"
   },
   {
     "revision": "60eb1a453bd765b6369f",
