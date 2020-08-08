@@ -2,7 +2,7 @@ const { shuffle } = require('./utils');
 
 const narrations = [
   "Game has begun, please confirm your role.",
-  "Doppelganger, wake up and look at another player's card. You are now that role. If your new role has a night application, do it now.",
+  // "Doppelganger, wake up and look at another player's card. You are now that role. If your new role has a night application, do it now.",
   "Werewolves, look for other werewolves. If there is no other werewolf, select a card from the center to see.",
   "Minion, look for the werewolves and confirm.",
   "Masons, look for other Masons and confirm.",
@@ -11,13 +11,13 @@ const narrations = [
   "Troublemaker, you may choose two players to change cards.",
   "Drunk, pick a card from the center to exchange with.",
   "Insomniac, you may check your current role.",
-  "Doppelganger, if you are now an Insomniac, you may check your current role.",
+  // "Doppelganger, if you are now an Insomniac, you may check your current role.",
   "The day has begun, discuss and vote before the timer ends."
 ];
 
 const requiredConfirms = [
   'all',
-  'doppelganger',
+  // 'doppelganger',
   'werewolf',
   'minion',
   'mason',
@@ -26,7 +26,7 @@ const requiredConfirms = [
   'troublemaker',
   'drunk',
   'insomniac',
-  'doppelganger',
+  // 'doppelganger',
   'all'
 ]
 

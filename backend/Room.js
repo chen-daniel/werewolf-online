@@ -1,7 +1,7 @@
 const Game = require('./Game');
 
 const defaultDeckOpts = {
-  doppelganger: false,
+  // doppelganger: false,
   minion: false,
   masons: false,
   seer: true,
