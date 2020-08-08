@@ -44,6 +44,11 @@ const UIStyles = styled.div`
 export default function GameUI({ state }) {
   const player = ['P1','P2','P3','P4']
   return (
+    <React.Fragment>
+      <div>
+        Game started with deck:
+        {JSON.stringify(state.game.deck)}
+      </div>
     <UIStyles>
       <div className="deck"> 
         <Card deck={true}/>
@@ -62,6 +67,7 @@ export default function GameUI({ state }) {
       ))}
       </div>
     </UIStyles>
+    </React.Fragment>
   )
 }
 
