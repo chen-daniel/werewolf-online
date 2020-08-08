@@ -1,6 +1,7 @@
 const express = require('express');
 const http = require("http");
 const socket = require('socket.io');
+const { RSA_PKCS1_PADDING } = require('constants');
 const app = express();
 const port = process.env.PORT || 8080
 app.set('port', port);
@@ -35,12 +36,24 @@ function generateRoomCode() {
 function Room() {
   this.players = {};
   this.gameState = undefined;
+  this.deckOpts = {};
+  this.roomState = 'waiting';
 }
 
 Room.prototype.addPlayer = function (playerName) {
   if (!this.players[playerName]) {
     this.players[playerName] = null;
   }
+}
+
+Room.prototype.startGame = function () {
+  this.gameState = new Game(this.deckOpts, Object.keys(this.players));
+  this.roomState = 'started';
+}
+
+function Game(deckOpts, players) {
+  this.deck = {};
+  this.players = players;
 }
 
 app.post('/create-room', (req, res) => {
@@ -64,21 +77,39 @@ const io = socket(server);
 io.origins('*:*');
 
 io.on("connection", socket => {
-  socket.on("join room", payload => {
-    rooms[payload.room].players[payload.playerName] = socket.id;
-    const players = Object.keys(rooms[payload.room].players);
-    console.log(players);
-    socket.emit("update state", {
-      game: rooms[payload.room].gameState,
-      players: Object.keys(rooms[payload.room].players)
-    });
-    for (let i = 0; i < players.length; i++) {
-      const otherSocket = rooms[payload.room].players[players[i]];
-      socket.to(otherSocket).emit("update state", {
-        game: rooms[payload.room].gameState,
-        players: Object.keys(rooms[payload.room].players)
-      });
+  function updateAll(room, uiState) {
+    socket.emit("update state", uiState);
+    for (const player in room.players) {
+      socket.to(room.players[player]).emit("update state", uiState);
     }
+  }
+  socket.on("join room", payload => {
+    const room = rooms[payload.room];
+
+    room.players[payload.playerName] = socket.id;
+    const players = Object.keys(room.players);
+    if (players.length > 3) {
+      room.roomState = 'ready';
+    }
+    const uiState = {
+      game: room.gameState,
+      players,
+      roomState: room.roomState
+    }
+    updateAll(room, uiState);
+  });
+  
+  socket.on('start game', payload => {
+    const room = rooms[payload.room];
+
+    room.startGame();
+    console.log(`Started game for room ${payload.room}`)
+    const uiState = {
+      game: room.gameState,
+      players: Object.keys(room.players),
+      roomState: room.roomState
+    }
+    updateAll(room, uiState);
   })
 });
 

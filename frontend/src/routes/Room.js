@@ -19,6 +19,10 @@ export default function Room({ match, location }) {
         }
     }, []);
 
+    function startGame() {
+        socketRef.current.emit('start game', { room });
+    }
+
     return (
         <div>
             <div>
@@ -29,6 +33,8 @@ export default function Room({ match, location }) {
             </div>
             Players in room:
             {JSON.stringify(uiState.players)}
+            {uiState.roomState === 'ready' && <button onClick={startGame}>Start Game</button>}
+            {uiState.roomState === 'started' && (<div>{JSON.stringify(uiState)}</div>)}
         </div>
     )
 }
