@@ -14,6 +14,7 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.use(express.json());
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
@@ -35,11 +36,23 @@ function Game() {
   this.gameState = {};
 }
 
-app.get('/create-room', (req, res) => {
+Game.prototype.addPlayer = function (playerName) {
+  this.players.push(playerName);
+}
+
+app.post('/create-room', (req, res) => {
   const roomCode = generateRoomCode();
   rooms[roomCode] = new Game();
   console.log(`Created room ${roomCode}`);
-  res.json({room: roomCode})
+  rooms[roomCode].addPlayer(req.body.name);
+  console.log(`Added ${req.body.name} to room ${roomCode}`)
+  res.json({ room: roomCode });
+});
+
+app.post('/join-room', (req, res) => {
+  rooms[req.body.room].addPlayer(req.body.name);
+  console.log(`Added ${req.body.name} to room ${req.body.room}`)
+  res.sendStatus(200);
 });
 
 app.listen(port, () => {
