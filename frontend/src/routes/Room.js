@@ -24,6 +24,12 @@ export default function Room({ match, location }) {
         socketRef.current.emit('start game', { room });
     }
 
+    function handleOptChange(e) {
+        console.log('hi')
+        console.log(e);
+        socketRef.current.emit('toggle deck option', { room, option: e.target.value})
+    }
+
     return (
         <div>
             <div>
@@ -32,8 +38,26 @@ export default function Room({ match, location }) {
                 <br />
                 Your name is {playerName}.
             </div>
-            Players in room:
-            {JSON.stringify(uiState.players)}
+            <div>
+                Players in room:
+                {JSON.stringify(uiState.players)}
+            </div>
+            {uiState.roomState !== 'started' && uiState.deckOpts && (
+                <div>
+                    <ul>
+                        {Object.keys(uiState.deckOpts).map((opt, i) => (
+                        <li key={i}>
+                            <input 
+                                type="radio" 
+                                value={opt} 
+                                checked={uiState.deckOpts[opt]} 
+                                onClick={handleOptChange}
+                                onChange={(e) => console.log(e)}
+                            /> {opt}
+                        </li>))}
+                    </ul>
+                </div>
+            )}
             {uiState.roomState === 'ready' && <button onClick={startGame}>Start Game</button>}
             {uiState.roomState === 'started' && <GameUI state={uiState} />}
         </div>
