@@ -74,17 +74,21 @@ function buildDeck(opts, numPlayers) {
   const numCards = numPlayers + 3;
   const deck = Object.keys(opts).filter(opt => opts[opt])
   const masons = deck.includes('masons');
-  const numOpts = numCards - (masons ? 3 : 2);
+  const numOpts = numCards - (masons ? 4 : 2);
+  if (masons) {
+    deck.splice(deck.indexOf('masons'), 1);
+  }
   shuffle(deck);
   if (deck.length > numOpts) {
-    deck.splice(numCards - 2);
+    deck.splice(numOpts);
   } else {
     while (deck.length < numOpts) {
       deck.push('villager')
     }
   }
   if (masons) {
-    deck.splice(deck.indexOf('masons'), 1, 'mason', 'mason')
+    deck.push('mason');
+    deck.push('mason');
   }
   deck.push('werewolf');
   deck.push('werewolf');
