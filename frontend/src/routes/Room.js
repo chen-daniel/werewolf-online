@@ -57,7 +57,7 @@ export default function Room({ match, location }) {
                 </div>
             )}
             {uiState.roomState === 'ready' && <button onClick={startGame}>Start Game</button>}
-            {uiState.roomState === 'started' && <GameUI state={uiState} />}
+            {uiState.roomState === 'started' && <GameUI state={uiState} playerName={playerName} room={room} socketRef={socketRef}/>}
         </div>
     )
 }

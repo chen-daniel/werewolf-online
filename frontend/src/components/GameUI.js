@@ -41,16 +41,24 @@ const UIStyles = styled.div`
 `
 
 
-export default function GameUI({ state }) {
+export default function GameUI({ state, socketRef, playerName, room }) {
   const player = ['P1','P2','P3','P4']
+  function submitConfirm() {
+    socketRef.current.emit('submit confirm', { room, playerName });
+  }
   return (
     <React.Fragment>
       <div>
         Game started with deck:
         {JSON.stringify(state.game.deck)}
         <br />
-        Assigned roles:
-        {JSON.stringify(state.game.roles, null, 2)}
+        Your role:
+        {state.game.roles.playerRoles[playerName]}
+        <br />
+        Narration:
+        {state.narration}
+        <br />
+        <button onClick={submitConfirm}>Confirm</button>
       </div>
     <UIStyles>
       <div className="deck"> 
