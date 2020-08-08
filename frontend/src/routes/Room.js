@@ -9,12 +9,14 @@ export default function Room({ match, location }) {
     const [uiState, setUIState] = React.useState({});
     
     useEffect(() => {
-        socketRef.current = connectSocket();
-        socketRef.current.emit('join room', { room, playerName });
-        socketRef.current.on('update state', state => {
-            console.log(state);
-            setUIState(state);
-        });
+        if (playerName) {
+            socketRef.current = connectSocket();
+            socketRef.current.emit('join room', { room, playerName });
+            socketRef.current.on('update state', state => {
+                console.log(state);
+                setUIState(state);
+            });
+        }
     }, []);
 
     return (
