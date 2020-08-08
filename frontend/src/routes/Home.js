@@ -1,17 +1,64 @@
 import React from 'react';
+import styled from 'styled-components'
 import { createRoom, joinRoom } from '../utils/api';
 import { Redirect } from 'react-router-dom';
+
+const HomeStyles = styled.div`
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  align-content: center;
+  height: 100vh;
+  color: hotpink;
+  .logo {
+    margin: 0 0 1rem 0;
+    font-size: 5rem;
+  }
+  button {
+    font-size: 1.3rem;
+    background: none;
+    border: 4px solid hotpink;
+    border-radius: 10px;
+    width: 15rem;
+    height: 4rem;
+    margin-top: 2rem;
+    font-weight: 600;
+    color: hotpink;
+    cursor: pointer;
+  }
+
+  .flx {
+    display: flex;
+    flex-flow: column;
+    justify-items: center;
+    align-items: center;
+  }
+`;
+
+const InputStyle = styled.input`
+  margin-top: 1rem;
+  width: 15rem;
+  height: 3rem;
+  border: 3px solid hotpink;
+  border-radius: 7px;
+  color: hotpink;
+  font-size: 1.3rem;
+  padding: 0 0.4rem;
+  text-align: center;
+`
 
 export default function Home() {
     const [nameInput, setNameInput] = React.useState('');
     return (
-    <div className="App">
+      <HomeStyles className="App">
+        <h1 className="logo">Werewolf Online</h1>
         <div>
-            Join as: 
-            <input type="text" value={nameInput} onChange={(e) => setNameInput(e.target.value)} />
+            <InputStyle type="text" value={nameInput} placeholder="Join as" onChange={(e) => setNameInput(e.target.value)} />
         </div>
         <CreateOrJoinRoom name={nameInput} />
-    </div>
+    </HomeStyles>
     );
 }
 
@@ -39,19 +86,17 @@ function CreateOrJoinRoom({ name }) {
         switch(state) {
             case 0:
                 return (
-                    <React.Fragment>
-                        <button onClick={handleCreateRoom}>CREATE ROOM</button>
-                        OR 
+                    <div className="flx">
+                    <button onClick={handleCreateRoom}>CREATE ROOM</button>
                         <button onClick={() => setViewState(1)}>JOIN ROOM</button>
-                    </React.Fragment>
+                    </div>
                 )
             case 1:
                 return (
-                    <React.Fragment>
-                        Room code:
-                        <input type="text" value={roomCodeInput} onChange={(e) => setRoomCodeInput(e.target.value)} />
+                    <div className="flx">
+                        <InputStyle type="text" value={roomCodeInput} placeholder="Room Code" onChange={(e) => setRoomCodeInput(e.target.value)} />
                         <button onClick={handleJoinRoom}>Join Room</button>
-                    </React.Fragment>
+                    </div>
                 )
         }
     }
