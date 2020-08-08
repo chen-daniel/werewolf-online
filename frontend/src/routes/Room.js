@@ -25,8 +25,6 @@ export default function Room({ match, location }) {
     }
 
     function handleOptChange(e) {
-        console.log('hi')
-        console.log(e);
         socketRef.current.emit('toggle deck option', { room, option: e.target.value})
     }
 

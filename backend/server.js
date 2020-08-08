@@ -34,14 +34,14 @@ function generateRoomCode() {
 }
 
 const defaultDeckOpts = {
-  doppelganger: true,
-  minion: true,
-  masons: true,
+  doppelganger: false,
+  minion: false,
+  masons: false,
   seer: true,
   robber: true,
   troublemaker: true,
-  drunk: true,
-  insomniac: true
+  drunk: false,
+  insomniac: false
 }
 
 function Room() {
@@ -62,8 +62,37 @@ Room.prototype.startGame = function () {
   this.roomState = 'started';
 }
 
+function shuffle(a) {
+  for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function buildDeck(opts, numPlayers) {
+  const numCards = numPlayers + 3;
+  const deck = Object.keys(opts).filter(opt => opts[opt])
+  const masons = deck.includes('masons');
+  const numOpts = numCards - (masons ? 3 : 2);
+  shuffle(deck);
+  if (deck.length > numOpts) {
+    deck.splice(numCards - 2);
+  } else {
+    while (deck.length < numOpts) {
+      deck.push('villager')
+    }
+  }
+  if (masons) {
+    deck.splice(deck.indexOf('masons'), 1, 'mason', 'mason')
+  }
+  deck.push('werewolf');
+  deck.push('werewolf');
+  return deck;
+}
+
 function Game(deckOpts, players) {
-  this.deck = {};
+  this.deck = buildDeck(deckOpts, players.length);
   this.players = players;
 }
 
