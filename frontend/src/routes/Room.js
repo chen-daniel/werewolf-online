@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connectSocket } from '../utils/api';
+import GameUI from '../components/GameUI';
 
 export default function Room({ match, location }) {
     const room = match.params.roomID;
@@ -34,7 +35,7 @@ export default function Room({ match, location }) {
             Players in room:
             {JSON.stringify(uiState.players)}
             {uiState.roomState === 'ready' && <button onClick={startGame}>Start Game</button>}
-            {uiState.roomState === 'started' && (<div>{JSON.stringify(uiState)}</div>)}
+            {uiState.roomState === 'started' && <GameUI state={uiState} />}
         </div>
     )
 }
