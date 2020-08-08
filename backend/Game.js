@@ -86,18 +86,26 @@ Game.prototype.submitConfirm = function (name) {
   this.confirms[name] = true;
 }
 
-Game.prototype.updateConfirms = function () {
+Game.prototype.updateConfirms = async function (sendUpdate, room) {
+  let flag = false;
   for (const player in this.confirms) {
     if (this.roles.playerRoles[player] === requiredConfirms[this.state]) {
+      flag = true;
       this.confirms[player] = false;
     }
   }
+  if (!flag) {
+    await new Promise(resolve => setTimeout(resolve, Math.random() * (10000 - 6000) + 6000));
+    return this.updateState(sendUpdate, room);
+  }
 }
 
-Game.prototype.updateState = function () {
+Game.prototype.updateState = function (sendUpdate, room) {
+  console.log(this.confirms);
   const players = Object.keys(this.confirms);
   for (let i = 0; i < players.length; i++) {
     if (!this.confirms[players[i]]) {
+      sendUpdate(room);
       return;
     }
   }
@@ -107,8 +115,8 @@ Game.prototype.updateState = function () {
   }
   while (this.state < narrations.length - 1 && 
     !this.deck.includes(requiredConfirms[this.state]))
-
-  this.updateConfirms();
+  this.updateConfirms(sendUpdate, room);
+  return sendUpdate(room);
 }
 
 module.exports = Game;

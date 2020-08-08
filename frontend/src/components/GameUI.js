@@ -58,7 +58,7 @@ export default function GameUI({ state, socketRef, playerName, room }) {
         Narration:
         {state.narration}
         <br />
-        <button onClick={submitConfirm}>Confirm</button>
+        {!state.game.confirms[playerName] && <button onClick={submitConfirm}>Confirm</button>}
       </div>
     <UIStyles>
       <div className="deck"> 

@@ -99,15 +99,18 @@ io.on("connection", socket => {
     const room = rooms[payload.room];
 
     room.gameState.submitConfirm(payload.playerName);
-    room.gameState.updateState();
-    const uiState = {
-      game: room.gameState,
-      deckOpts: room.deckOpts,
-      players: Object.keys(room.players),
-      roomState: room.roomState,
-      narration: room.gameState.narration()
+
+    function sendUpdate(room) {
+      const uiState = {
+        game: room.gameState,
+        deckOpts: room.deckOpts,
+        players: Object.keys(room.players),
+        roomState: room.roomState,
+        narration: room.gameState.narration()
+      }
+      updateAll(room, uiState);
     }
-    updateAll(room, uiState);
+    room.gameState.updateState(sendUpdate, room);
   });
 });
 
