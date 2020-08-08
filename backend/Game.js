@@ -94,7 +94,7 @@ Game.prototype.updateConfirms = async function (sendUpdate, room) {
       this.confirms[player] = false;
     }
   }
-  if (!flag) {
+  if (!flag && this.state < narrations.length - 1) {
     await new Promise(resolve => setTimeout(resolve, Math.random() * (10000 - 6000) + 6000));
     return this.updateState(sendUpdate, room);
   }
