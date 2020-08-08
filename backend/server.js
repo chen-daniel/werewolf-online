@@ -33,10 +33,21 @@ function generateRoomCode() {
   return result;
 }
 
+const defaultDeckOpts = {
+  doppelganger: true,
+  minion: true,
+  masons: true,
+  seer: true,
+  robber: true,
+  troublemaker: true,
+  drunk: true,
+  insomniac: true
+}
+
 function Room() {
   this.players = {};
   this.gameState = undefined;
-  this.deckOpts = {};
+  this.deckOpts = Object.assign({}, defaultDeckOpts);
   this.roomState = 'waiting';
 }
 
@@ -88,12 +99,26 @@ io.on("connection", socket => {
 
     room.players[payload.playerName] = socket.id;
     const players = Object.keys(room.players);
-    if (players.length > 3) {
+    if (players.length > 2) {
       room.roomState = 'ready';
     }
     const uiState = {
       game: room.gameState,
+      deckOpts: room.deckOpts,
       players,
+      roomState: room.roomState
+    }
+    updateAll(room, uiState);
+  });
+
+  socket.on('toggle deck option', payload => {
+    const room = rooms[payload.room];
+    room.deckOpts[payload.option] = !room.deckOpts[payload.option];
+    console.log(`Toggled deck option ${payload.option} for room ${payload.room}`);
+    const uiState = {
+      game: room.gameState,
+      deckOpts: room.deckOpts,
+      players: Object.keys(room.players),
       roomState: room.roomState
     }
     updateAll(room, uiState);
@@ -106,11 +131,12 @@ io.on("connection", socket => {
     console.log(`Started game for room ${payload.room}`)
     const uiState = {
       game: room.gameState,
+      deckOpts: room.deckOpts,
       players: Object.keys(room.players),
       roomState: room.roomState
     }
     updateAll(room, uiState);
-  })
+  });
 });
 
 server.listen(port, () => {
