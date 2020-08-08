@@ -95,9 +95,19 @@ function buildDeck(opts, numPlayers) {
   return deck;
 }
 
+function assignRoles(deck, players) {
+  const deckCopy = deck.slice(0, deck.length);
+  shuffle(deckCopy);
+  const roles = {playerRoles: {}, center: deckCopy.slice(players.length)};
+  for (let i = 0; i < players.length; i++) {
+    roles.playerRoles[players[i]] = deckCopy[i]
+  }
+  return roles;
+}
+
 function Game(deckOpts, players) {
   this.deck = buildDeck(deckOpts, players.length);
-  this.players = players;
+  this.roles = assignRoles(this.deck, players);
 }
 
 app.post('/create-room', (req, res) => {
