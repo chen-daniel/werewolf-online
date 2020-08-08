@@ -1,6 +1,7 @@
 import React from 'react';
 import { createRoom, joinRoom } from '../utils/api';
 import { Redirect } from 'react-router-dom';
+import HomeLayout from '../components/HomeLayout'
 
 export default function Home() {
     const [nameInput, setNameInput] = React.useState('');
