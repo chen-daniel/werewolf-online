@@ -12,7 +12,7 @@ const CardStyle = styled.div`
   justify-content: center;
   align-items: center;
   h1 {
-    font-size: 7rem;
+    font-size: 2.5rem;
     margin: 0;
     padding: 0;
     line-height: 1;
@@ -38,11 +38,11 @@ const CardStyle = styled.div`
   `}
 `
 
-const Card = ({me, deck, player}) => {
+const Card = ({me, deck, player, role}) => {
 
   return (
     <CardStyle me={me} player={player} deck={deck}>
-    <h1>X</h1>
+      <h1>{role ? role.toUpperCase() : "X"}</h1>
     </CardStyle>
   )
 }

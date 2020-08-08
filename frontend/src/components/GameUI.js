@@ -40,6 +40,23 @@ const UIStyles = styled.div`
   }
 `
 
+const ModelStyles = styled.div`
+
+display: flex;
+flex-flow: column;
+margin-top: 1rem;
+justify-content: center;
+align-items: center;
+color: #2b262c;
+
+h4 {
+  font-size: 18px;
+  font-weight: 400;
+  color: #2b262c;
+}
+
+`
+
 
 export default function GameUI({ state, socketRef, playerName, room }) {
   const player = ['P1','P2','P3','P4']
@@ -48,18 +65,17 @@ export default function GameUI({ state, socketRef, playerName, room }) {
   }
   return (
     <React.Fragment>
-      <div>
-        Game started with deck:
+      <ModelStyles>
+        <h4>
+         <strong>Deck | </strong>
         {JSON.stringify(state.game.deck)}
-        <br />
-        Your role:
-        {state.game.roles.playerRoles[playerName]}
-        <br />
-        Narration:
+        </h4>
+        <h4>
+        <strong>Narration | </strong>
         {state.narration}
-        <br />
+        </h4>
         {!state.game.confirms[playerName] && <button onClick={submitConfirm}>Confirm</button>}
-      </div>
+      </ModelStyles>
     <UIStyles>
       <div className="deck"> 
         <Card deck={true}/>
@@ -67,13 +83,13 @@ export default function GameUI({ state, socketRef, playerName, room }) {
         <Card deck={true}/>
       </div>
         <div className="me"> 
-          <Card me={true} />
+          <Card me={true} role={state.game.roles.playerRoles[playerName]}/>
         </div>
       <div className="otherPlayers">
-        {player.map((player) => (
+        {state.players.map((player) => (
          <div className="flx">
-          <h4>${player}</h4>
-          <Card player={true}/>
+          <h4>{player}</h4>
+            <Card player={true} />
         </div>
       ))}
       </div>
