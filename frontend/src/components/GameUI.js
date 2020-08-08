@@ -50,7 +50,7 @@ export default function GameUI({ state }) {
         {JSON.stringify(state.game.deck)}
         <br />
         Assigned roles:
-        {JSON.stringify(state.game.roles)}
+        {JSON.stringify(state.game.roles, null, 2)}
       </div>
     <UIStyles>
       <div className="deck"> 
