@@ -42,12 +42,14 @@ const io = socket(server);
 io.origins('*:*');
 
 io.on("connection", socket => {
+
   function updateAll(room, uiState) {
     socket.emit("update state", uiState);
     for (const player in room.players) {
       socket.to(room.players[player]).emit("update state", uiState);
     }
   }
+
   socket.on("join room", payload => {
     const room = rooms[payload.room];
 
@@ -87,7 +89,23 @@ io.on("connection", socket => {
       game: room.gameState,
       deckOpts: room.deckOpts,
       players: Object.keys(room.players),
-      roomState: room.roomState
+      roomState: room.roomState,
+      narration: room.gameState.narration()
+    }
+    updateAll(room, uiState);
+  });
+
+  socket.on('submit confirm', payload => {
+    const room = rooms[payload.room];
+
+    room.gameState.submitConfirm(payload.playerName);
+    room.gameState.updateState();
+    const uiState = {
+      game: room.gameState,
+      deckOpts: room.deckOpts,
+      players: Object.keys(room.players),
+      roomState: room.roomState,
+      narration: room.gameState.narration()
     }
     updateAll(room, uiState);
   });
