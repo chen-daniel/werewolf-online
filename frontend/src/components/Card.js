@@ -35,17 +35,17 @@ const CardStyle = styled.div`
     css`
     height: 27rem;
     width: 17rem;
-   border: 5px solid deeppink;
+   border: 4px solid deeppink;
   `}
   ${(props) => props.deck &&
     css`
     height: 9rem;
     width: 6rem;
-    border: 5px solid darkcyan;
+    border: 4px solid darkcyan;
   `}
   ${(props) => props.player &&
     css`
-    border: 5px solid purple;
+    border: 4px solid purple;
     height: 12rem;
     width: 8rem;
   `}
@@ -85,6 +85,10 @@ const CardStyle = styled.div`
     ` : role === "villager" && css`
       background: url(${villager}) no-repeat center center/cover;
     ` 
+  } 
+  ${({ selected }) => selected && css`
+    border: 8px solid black;
+  `
   } 
   /* End BG-Images  */
 `
