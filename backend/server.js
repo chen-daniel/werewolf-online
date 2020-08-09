@@ -147,6 +147,19 @@ io.on("connection", socket => {
     }
     socket.emit('update state', playerUIState(uiState, player))
   });
+
+  socket.on('reset game', payload => {
+    const room = rooms[payload.room];
+    room.roomState = 'ready';
+    room.gameState = undefined;
+    const uiState = {
+      game: room.gameState,
+      deckOpts: room.deckOpts,
+      players: Object.keys(room.players),
+      roomState: room.roomState
+    }
+    updateAll(room, uiState);
+  });
 });
 
 server.listen(port, () => {

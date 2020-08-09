@@ -78,6 +78,11 @@ export default function GameUI({ state, socketRef, playerName, room }) {
   function submitConfirm() {
     socketRef.current.emit('submit confirm', { room, playerName });
   }
+
+  function resetGame() {
+    socketRef.current.emit('reset game', { room })
+  }
+
   function performAction(action) {
     console.log('performing action');
     socketRef.current.emit('perform action', { room, playerName, action})
@@ -96,6 +101,7 @@ export default function GameUI({ state, socketRef, playerName, room }) {
           {state.narration}
           </h4>
       </div>
+        {state.game.state === 10 && (<button onClick={resetGame}>Reset Game</button>)}
         {showConfirm && <button onClick={submitConfirm}>Confirm</button>}
       </ModelStyles>
     <UIStyles>
