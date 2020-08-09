@@ -4,11 +4,11 @@ const { cloneDeep } = require('lodash');
 const narrations = [
   "Game has begun, please confirm your role.",
   // "Doppelganger, wake up and look at another player's card. You are now that role. If your new role has a night application, do it now.",
-  "Werewolves, look for other werewolves. If there is no other werewolf, select a card from the center to see.",
+  "Werecats, look for other werecats. If there is no other werecat, select a card from the center to see.",
   "Minion, look for the werewolves and confirm.",
   "Masons, look for other Masons and confirm.",
   "Seer, You make look at one player's card, or two cards from the center.",
-  "Robber, you may choose another player to exchange cards with and confirm.",
+  "Cat Burglar, you may choose another player to exchange cards with and confirm.",
   "Troublemaker, you may choose two players to change cards.",
   "Drunk, pick a card from the center to exchange with.",
   "Insomniac, you may check your current role.",
@@ -19,14 +19,14 @@ const narrations = [
 const requiredConfirms = [
   'all',
   // 'doppelganger',
-  'werewolf',
+  'werecat',
   'minion',
   'mason',
   'seer',
-  'robber',
+  'cat burglar',
   'troublemaker',
   'drunk',
-  'insomniac',
+  'insomnicat',
   // 'doppelganger',
   'all'
 ]
@@ -51,8 +51,8 @@ function buildDeck(opts, numPlayers) {
     deck.push('mason');
     deck.push('mason');
   }
-  deck.push('werewolf');
-  deck.push('werewolf');
+  deck.push('werecat');
+  deck.push('werecat');
   return deck;
 }
 
@@ -127,9 +127,9 @@ Game.prototype.performAction = function (player, action) {
     let flag;
     switch (this.state) {
       case 1:
-        // Werewolf
+        // Werecat
         flag = false;
-        console.log('performing werewolf action');
+        console.log('performing werecat action');
         for (const otherPlayer in this.startingRoles.playerRoles) {
           if (otherPlayer !== player && this.startingRoles.playerRoles[otherPlayer] === requiredConfirms[this.state]) {
             flag = true;
@@ -164,8 +164,8 @@ Game.prototype.performAction = function (player, action) {
         }
         break;
       case 5:
-        // Robber
-        console.log('performing robber action');
+        // Cat Burglar
+        console.log('performing cat burglar action');
         if (this.actions.length === 0 && action[0] === 'playerRoles') {
           this.actions.push(action);
           let swap = this.roles.playerRoles[player]
@@ -217,7 +217,7 @@ Game.prototype.playerUIState = function (player) {
       state.confirms[player] = this.confirms[player]
       break;
     case 1:
-      // Werewolf
+      // Werecat
       if (this.startingRoles.playerRoles[player] === requiredConfirms[this.state]) {
         flag = false;
         for (const otherPlayer in this.startingRoles.playerRoles) {
@@ -239,7 +239,7 @@ Game.prototype.playerUIState = function (player) {
       // Minion
       if (this.startingRoles.playerRoles[player] === requiredConfirms[this.state]) {
         for (const otherPlayer in this.roles.playerRoles) {
-          if (this.roles.playerRoles[otherPlayer] === 'werewolf') {
+          if (this.roles.playerRoles[otherPlayer] === 'werecat') {
             state.roles.playerRoles[otherPlayer] = this.roles.playerRoles[otherPlayer];
           }
         }
@@ -285,7 +285,7 @@ Game.prototype.playerUIState = function (player) {
       }
       break;
     case 5:
-      // Robber
+      // Cat Burglar
       if (this.startingRoles.playerRoles[player] === requiredConfirms[this.state]) {
         state.confirms[player] = this.confirms[player];
         if (this.actions[0]) {
@@ -308,7 +308,7 @@ Game.prototype.playerUIState = function (player) {
       }
       break;
     case 8:
-      // Insomniac
+      // Insomnicat
       if (this.startingRoles.playerRoles[player] === requiredConfirms[this.state]) {
         state.roles.playerRoles[player] = this.roles.playerRoles[player];
         state.confirms[player] = this.confirms[player];
