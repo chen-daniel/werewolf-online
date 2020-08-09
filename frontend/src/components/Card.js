@@ -38,10 +38,10 @@ const CardStyle = styled.div`
   `}
 `
 
-const Card = ({me, deck, player, role}) => {
+const Card = ({me, deck, player, role, onClick}) => {
 
   return (
-    <CardStyle me={me} player={player} deck={deck}>
+    <CardStyle me={me} player={player} deck={deck} onClick={onClick}>
       <h1>{role ? role.toUpperCase() : "X"}</h1>
     </CardStyle>
   )

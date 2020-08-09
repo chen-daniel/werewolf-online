@@ -131,7 +131,19 @@ io.on("connection", socket => {
   });
 
   socket.on('perform action', payload => {
-
+    console.log('perform action received', payload);
+    const room = rooms[payload.room];
+    const player = payload.playerName;
+    const action = payload.action; // [{type center|playerRole}, {index/key}]
+    room.gameState.performAction(player, action);
+    const uiState = {
+      game: room.gameState,
+      deckOpts: room.deckOpts,
+      players: Object.keys(room.players),
+      roomState: room.roomState,
+      narration: room.gameState.narration()
+    }
+    socket.emit('update state', playerUIState(uiState, player))
   });
 });
 

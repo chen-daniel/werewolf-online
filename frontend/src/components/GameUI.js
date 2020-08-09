@@ -63,6 +63,10 @@ export default function GameUI({ state, socketRef, playerName, room }) {
   function submitConfirm() {
     socketRef.current.emit('submit confirm', { room, playerName });
   }
+  function performAction(action) {
+    console.log('performing action');
+    socketRef.current.emit('perform action', { room, playerName, action})
+  }
   const showConfirm = state.game.confirms[playerName] !== undefined && !state.game.confirms[playerName]
   return (
     <React.Fragment>
@@ -78,19 +82,28 @@ export default function GameUI({ state, socketRef, playerName, room }) {
         {showConfirm && <button onClick={submitConfirm}>Confirm</button>}
       </ModelStyles>
     <UIStyles>
-      <div className="deck"> 
-        <Card deck={true}/>
-        <Card deck={true}/>
-        <Card deck={true}/>
+      <div className="deck">
+        {state.game.roles.center.map((_card, i) => (
+          <Card 
+            deck={true}
+            role={state.game.roles.center[i]}
+            onClick={() => performAction(['center', i])}
+            key={i}
+          />
+        ))}
       </div>
         <div className="me"> 
           <Card me={true} role={state.game.roles.playerRoles[playerName]} />
         </div>
       <div className="otherPlayers">
-        {state.players.filter(player => player !== playerName).map((player) => (
-         <div className="flx">
+        {state.players.filter(player => player !== playerName).map((player, i) => (
+         <div className="flx" key={i}>
           <h4>{player}</h4>
-            <Card player={true} role={state.game.roles.playerRoles[player]} />
+            <Card 
+              player={true} 
+              role={state.game.roles.playerRoles[player]}
+              onClick={() => performAction(['playerRoles', player])}
+            />
         </div>
       ))}
       </div>
