@@ -1,5 +1,14 @@
 import React from 'react'
-import styled, {css} from 'styled-components'
+import styled, { css } from 'styled-components'
+import back from '../assets/Back.jpg'
+import werecat from '../assets/werecat.jpg'
+import insomnicat from '../assets/insomnicat.jpg'
+import seer from '../assets/seer.jpg'
+import drunk from '../assets/drunk.jpg'
+import minion from '../assets/minion.jpg'
+import catBurglar from '../assets/cat-burglar.jpg'
+import siameseTwin from '../assets/siamese-twin.jpg'
+
 
 const CardStyle = styled.div`
   height: 12rem;
@@ -18,6 +27,36 @@ const CardStyle = styled.div`
     line-height: 1;
   }
 
+
+
+  ${({role}) => !role ? 
+    css`
+      background: url(${back}) no-repeat center center/cover;
+    ` : role === "werecat" && css`
+      background: url(${werecat}) no-repeat center center/cover;
+    `
+  } 
+  ${({role}) => role === "insomnicat" ? 
+    css`
+      background: url(${insomnicat}) no-repeat center center/cover;
+    ` : role === "seer" && css`
+      background: url(${seer}) no-repeat center center/cover;
+    `
+  } 
+  ${({role}) => role === "drunk" ? 
+    css`
+      background: url(${drunk}) no-repeat center center/cover;
+    ` : role === "minion" && css`
+      background: url(${minion}) no-repeat center center/cover;
+    `
+  } 
+  ${({role}) => role === "cat burglar" ? 
+    css`
+      background: url(${catBurglar}) no-repeat center center/cover;
+    ` : role === "siamese twin" && css`
+      background: url(${siameseTwin}) no-repeat center center/cover;
+    `
+  } 
   ${(props) => props.me &&
     css`
     height: 27rem;
@@ -41,10 +80,20 @@ const CardStyle = styled.div`
 const Card = ({me, deck, player, role, onClick }) => {
 
   return (
-    <CardStyle me={me} player={player} deck={deck} onClick={onClick}>
-      <h1>{role ? role.toUpperCase() : "X"}</h1>
+    <CardStyle me={me} player={player} deck={deck} onClick={onClick} role={role}>
+      {/* <h1>{role ? role.toUpperCase() : "X"}</h1> */}
+      <></>
     </CardStyle>
   )
 }
 
 export default Card;
+
+  // 'werecat', X
+  // 'minion',
+  // 'siamese twin',
+  // 'seer', X
+  // 'cat burglar', X
+  // 'troublemaker',
+  // 'drunk',
+  // 'insomnicat', X
