@@ -178,7 +178,6 @@ Game.prototype.playerUIState = function (player) {
         let flag = false;
         for (const otherPlayer in this.startingRoles.playerRoles) {
           if (otherPlayer !== player && this.startingRoles.playerRoles[otherPlayer] === requiredConfirms[this.state]) {
-            console.log('other werewolf found');
             flag = true;
             state.roles.playerRoles[otherPlayer] = this.startingRoles.playerRoles[otherPlayer];
             state.confirms[player] = this.confirms[player];
