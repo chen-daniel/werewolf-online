@@ -88,6 +88,9 @@ function Game(deckOpts, players) {
 }
 
 Game.prototype.narration = function () {
+  if (this.state > 11) {
+    return `${this.killed.join(' and ')} voted to be killed! ${narrations[this.state]}`;
+  }
   return narrations[this.state];
 }
 
@@ -147,9 +150,10 @@ Game.prototype.goToWinnerState = function() {
       max = votes[this.actions[i].action[1]];
     }
   }
-  const killed = Object.keys(votes).filter(player => votes[player] === max)
-  for (let i = 0; i < killed.length; i++) {
-    if (this.roles.playerRoles[killed[i]] === 'werecat') {
+  this.killed = Object.keys(votes).filter(player => votes[player] === max)
+  
+  for (let i = 0; i < this.killed.length; i++) {
+    if (this.roles.playerRoles[this.killed[i]] === 'werecat') {
       this.state = 11;
       return;
     }
