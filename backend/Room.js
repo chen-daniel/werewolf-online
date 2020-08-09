@@ -3,7 +3,7 @@ const Game = require('./Game');
 const defaultDeckOpts = {
   // doppelganger: false,
   minion: false,
-  masons: false,
+  'siamese twins': false,
   seer: true,
   'cat burglar': true,
   troublemaker: true,

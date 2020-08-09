@@ -6,7 +6,7 @@ const narrations = [
   // "Doppelganger, wake up and look at another player's card. You are now that role. If your new role has a night application, do it now.",
   "Werecats, look for other Werecats and confirm. If there is no other werecat, select a card from the center to see and confirm.",
   "Minion, look for the Werecats and confirm.",
-  "Masons, look for other Masons and confirm. If there is no other mason, select a card from the center to see and confirm.",
+  "Siamese Twins, look for other Siamese Twins and confirm. If there is no other Siamese Twin, select a card from the center to see and confirm.",
   "Seer, You make look at one player's card, or two cards from the center.",
   "Cat Burglar, you may choose another player to exchange cards with and confirm.",
   "Troublemaker, you may choose two players to change cards.",
@@ -21,7 +21,7 @@ const requiredConfirms = [
   // 'doppelganger',
   'werecat',
   'minion',
-  'mason',
+  'siamese twin',
   'seer',
   'cat burglar',
   'troublemaker',
@@ -34,10 +34,10 @@ const requiredConfirms = [
 function buildDeck(opts, numPlayers) {
   const numCards = numPlayers + 3;
   const deck = Object.keys(opts).filter(opt => opts[opt])
-  const masons = deck.includes('masons');
-  const numOpts = numCards - (masons ? 4 : 2);
-  if (masons) {
-    deck.splice(deck.indexOf('masons'), 1);
+  const twin = deck.includes('siamese twins');
+  const numOpts = numCards - (twin ? 4 : 2);
+  if (twin) {
+    deck.splice(deck.indexOf('siamese twins'), 1);
   }
   shuffle(deck);
   if (deck.length > numOpts) {
@@ -47,9 +47,9 @@ function buildDeck(opts, numPlayers) {
       deck.push('villager')
     }
   }
-  if (masons) {
-    deck.push('mason');
-    deck.push('mason');
+  if (twin) {
+    deck.push('siamese twin');
+    deck.push('siamese twin');
   }
   deck.push('werecat');
   deck.push('werecat');
@@ -145,9 +145,9 @@ Game.prototype.performAction = function (player, action) {
         }
         break;
       case 3:
-        // Mason
+        // Siamese Twin
         flag = false;
-        console.log('performing mason action');
+        console.log('performing siamese twin action');
         for (const otherPlayer in this.startingRoles.playerRoles) {
           if (otherPlayer !== player && this.startingRoles.playerRoles[otherPlayer] === requiredConfirms[this.state]) {
             flag = true;
@@ -257,7 +257,7 @@ Game.prototype.playerUIState = function (player) {
       }
       break;
     case 3:
-      // Mason
+      // Siamese Twin
       flag = false;
       if (this.startingRoles.playerRoles[player] === requiredConfirms[this.state]) {
         flag = false;
