@@ -63,6 +63,7 @@ export default function GameUI({ state, socketRef, playerName, room }) {
   function submitConfirm() {
     socketRef.current.emit('submit confirm', { room, playerName });
   }
+  const showConfirm = state.game.confirms[playerName] !== undefined && !state.game.confirms[playerName]
   return (
     <React.Fragment>
       <ModelStyles>
@@ -74,7 +75,7 @@ export default function GameUI({ state, socketRef, playerName, room }) {
         <strong>Narration | </strong>
         {state.narration}
         </h4>
-        {!state.game.confirms[playerName] && <button onClick={submitConfirm}>Confirm</button>}
+        {showConfirm && <button onClick={submitConfirm}>Confirm</button>}
       </ModelStyles>
     <UIStyles>
       <div className="deck"> 
