@@ -59,7 +59,7 @@ export default function Room({ match, location }) {
                 setUIState(state);
             });
         }
-    }, []);
+    }, [room, playerName]);
 
     function startGame() {
         socketRef.current.emit('start game', { room });

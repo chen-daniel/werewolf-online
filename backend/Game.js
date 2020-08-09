@@ -14,7 +14,9 @@ const narrations = [
   "Insomnicat, you may check your current role and confirm.",
   // "Doppelganger, if you are now an Insomniac, you may check your current role.",
   "The day has begun, discuss and vote, then confirm.",
-  "Final reveal."
+  "Final reveal.",
+  "Villagers win!",
+  "Werecats win!"
 ];
 
 const requiredConfirms = [
@@ -30,7 +32,9 @@ const requiredConfirms = [
   'insomnicat',
   // 'doppelganger',
   'all',
-  'none'
+  'none',
+  'none',
+  'none',
 ]
 
 function buildDeck(opts, numPlayers) {
@@ -92,7 +96,7 @@ Game.prototype.submitConfirm = function (name) {
 }
 
 Game.prototype.updateConfirms = async function (sendUpdate, room) {
-  if (this.state === narrations.length - 2) {
+  if (this.state === narrations.length - 4) {
     this.confirms = resetConfirms(Object.keys(this.confirms));
     return;
   }
@@ -103,7 +107,7 @@ Game.prototype.updateConfirms = async function (sendUpdate, room) {
       this.confirms[player] = false;
     }
   }
-  if (!flag && this.state < narrations.length - 2) {
+  if (!flag && this.state < narrations.length - 4) {
     await new Promise(resolve => setTimeout(resolve, Math.random() * (10000 - 6000) + 6000));
     return this.updateState(sendUpdate, room);
   }
@@ -121,20 +125,37 @@ Game.prototype.updateState = function (sendUpdate, room) {
   do {
     this.state++;
   }
-  while (this.state < narrations.length - 2 && 
+  while (this.state < narrations.length - 4 && 
     !this.deck.includes(requiredConfirms[this.state]))
   this.updateConfirms(sendUpdate, room);
   if (this.state === 10) {
-    const votes = {}
-    for (let i = 0; i < this.actions.length; i++) {
-      if (!votes[this.actions[i].action[1]]) {
-        votes[this.actions[i].action[1]] = 0;
-      }
-      votes[this.actions[i].action[1]] += 1;
-    }
+    this.goToWinnerState()
   }
   this.actions = [];
   return sendUpdate(room);
+}
+
+Game.prototype.goToWinnerState = function() {
+  const votes = {}
+  max = 0;
+  for (let i = 0; i < this.actions.length; i++) {
+    if (!votes[this.actions[i].action[1]]) {
+      votes[this.actions[i].action[1]] = 0;
+    }
+    votes[this.actions[i].action[1]] += 1;
+    if (votes[this.actions[i].action[1]] > max) {
+      max = votes[this.actions[i].action[1]];
+    }
+  }
+  const killed = Object.keys(votes).filter(player => votes[player] === max)
+  for (let i = 0; i < killed.length; i++) {
+    if (this.roles.playerRoles[killed[i]] === 'werecat') {
+      this.state = 11;
+      return;
+    }
+  }
+  this.state = 12;
+  return;
 }
 
 Game.prototype.performAction = function (player, action) {

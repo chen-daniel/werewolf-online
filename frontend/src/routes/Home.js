@@ -98,6 +98,8 @@ function CreateOrJoinRoom({ name }) {
                         <button onClick={handleJoinRoom}>Join Room</button>
                     </div>
                 )
+            default:
+                break;
         }
     }
     return (
