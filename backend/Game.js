@@ -124,10 +124,11 @@ Game.prototype.updateState = function (sendUpdate, room) {
 
 Game.prototype.performAction = function (player, action) {
   if (this.startingRoles.playerRoles[player] === requiredConfirms[this.state]) {
+    let flag;
     switch (this.state) {
       case 1:
         // Werewolf
-        let flag = false;
+        flag = false;
         console.log('performing werewolf action');
         for (const otherPlayer in this.startingRoles.playerRoles) {
           if (otherPlayer !== player && this.startingRoles.playerRoles[otherPlayer] === requiredConfirms[this.state]) {
@@ -141,6 +142,17 @@ Game.prototype.performAction = function (player, action) {
         break;
       case 3:
         // Mason
+        flag = false;
+        console.log('performing mason action');
+        for (const otherPlayer in this.startingRoles.playerRoles) {
+          if (otherPlayer !== player && this.startingRoles.playerRoles[otherPlayer] === requiredConfirms[this.state]) {
+            flag = true;
+            break;
+          }
+        }
+        if (!flag && this.actions.length == 0 && action[0] === 'center') {
+          this.actions.push(action);
+        }
         break;
       case 4:
         // Seer
@@ -166,6 +178,7 @@ Game.prototype.playerUIState = function (player) {
   state.state = this.state;
   state.confirms = {};
   state.roles = { playerRoles: {}, center: new Array(3) };
+  let flag;
   switch (this.state) {
     case 0:
       // Start game
@@ -175,7 +188,7 @@ Game.prototype.playerUIState = function (player) {
     case 1:
       // Werewolf
       if (this.startingRoles.playerRoles[player] === requiredConfirms[this.state]) {
-        let flag = false;
+        flag = false;
         for (const otherPlayer in this.startingRoles.playerRoles) {
           if (otherPlayer !== player && this.startingRoles.playerRoles[otherPlayer] === requiredConfirms[this.state]) {
             flag = true;
@@ -204,13 +217,22 @@ Game.prototype.playerUIState = function (player) {
       break;
     case 3:
       // Mason
+      flag = false;
       if (this.startingRoles.playerRoles[player] === requiredConfirms[this.state]) {
-        for (const otherPlayer in this.roles.playerRoles) {
-          if (otherPlayer !== player && this.roles.playerRoles[otherPlayer] === requiredConfirms[this.state]) {
-            state.roles.playerRoles[otherPlayer] = this.roles.playerRoles[otherPlayer];
+        flag = false;
+        for (const otherPlayer in this.startingRoles.playerRoles) {
+          if (otherPlayer !== player && this.startingRoles.playerRoles[otherPlayer] === requiredConfirms[this.state]) {
+            flag = true;
+            state.roles.playerRoles[otherPlayer] = this.startingRoles.playerRoles[otherPlayer];
+            state.confirms[player] = this.confirms[player];
           }
         }
-        state.confirms[player] = this.confirms[player];
+        if (!flag) {
+          if (this.actions.length == 1) {
+            state.roles.center[this.actions[0][1]] = this.roles.center[this.actions[0][1]];
+            state.confirms[player] = this.confirms[player];
+          } 
+        }
       }
       break;
     case 4:
