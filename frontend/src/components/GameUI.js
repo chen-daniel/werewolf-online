@@ -56,7 +56,7 @@ h4 {
   font-weight: 400;
 }
 h4.turn {
-  color: #feeeda
+  color: #ad251b;
 }
  button {
     font-size: 1rem;
