@@ -156,15 +156,46 @@ Game.prototype.performAction = function (player, action) {
         break;
       case 4:
         // Seer
+        console.log('performing seer action');
+        if (this.actions.length === 0) {
+          this.actions.push(action);
+        } else if (this.actions.length === 1 && this.actions[0][0] === 'center' && action[0] === 'center') {
+          this.actions.push(action);
+        }
         break;
       case 5:
         // Robber
+        console.log('performing robber action');
+        if (this.actions.length === 0 && action[0] === 'playerRoles') {
+          this.actions.push(action);
+          let swap = this.roles.playerRoles[player]
+          this.roles.playerRoles[player] = this.roles.playerRoles[action[1]];
+          this.roles.playerRoles[action[1]] = swap;
+        }
         break;
       case 6:
         // Troublemaker
+        console.log('performing troublemaker action');
+        if (action[0] === 'playerRoles') {
+          if (this.actions.length === 0) {
+            this.actions.push(action);
+          } else if (this.actions.length === 1) {
+            this.actions.push(action);
+            let swap = this.roles.playerRoles[action[1]];
+            this.roles.playerRoles[action[1]] = this.roles.playerRoles[this.actions[0][1]];
+            this.roles.playerRoles[this.actions[0][1]] = swap;
+          }
+        }
         break;
       case 7:
         // Drunk
+        console.log('performing drunk action');
+        if (this.actions.length === 0 && action[0] === 'center') {
+          this.actions.push(action);
+          let swap = this.roles.playerRoles[player];
+          this.roles.playerRoles[player] = this.roles.center[action[1]];
+          this.roles.center[action[1]] = swap;
+        }
         break;
       default:
         break;
@@ -228,7 +259,7 @@ Game.prototype.playerUIState = function (player) {
           }
         }
         if (!flag) {
-          if (this.actions.length == 1) {
+          if (this.actions.length === 1) {
             state.roles.center[this.actions[0][1]] = this.roles.center[this.actions[0][1]];
             state.confirms[player] = this.confirms[player];
           } 
@@ -238,13 +269,28 @@ Game.prototype.playerUIState = function (player) {
     case 4:
       // Seer
       if (this.startingRoles.playerRoles[player] === requiredConfirms[this.state]) {
-        state.confirms[player] = this.confirms[player];
+        if (this.actions.length > 0) {
+          if (this.actions[0][0] === 'playerRoles') {
+            state.roles.playerRoles[this.actions[0][1]] = this.roles.playerRoles[this.actions[0][1]];
+            state.confirms[player] = this.confirms[player];
+          } else {
+            for (let i = 0; i < this.actions.length; i++) {
+              state.roles.center[this.actions[i][1]] = this.roles.center[this.actions[i][1]];
+            }
+            if (this.actions.length === 2) {
+              state.confirms[player] = this.confirms[player];
+            }
+          }
+        }
       }
       break;
     case 5:
       // Robber
       if (this.startingRoles.playerRoles[player] === requiredConfirms[this.state]) {
         state.confirms[player] = this.confirms[player];
+        if (this.actions[0]) {
+          state.roles.playerRoles[player] = this.roles.playerRoles[player];
+        }
       }
       break;
     case 6:
@@ -256,7 +302,9 @@ Game.prototype.playerUIState = function (player) {
     case 7:
       // Drunk
       if (this.startingRoles.playerRoles[player] === requiredConfirms[this.state]) {
-        state.confirms[player] = this.confirms[player];
+        if (this.actions.length === 1) {
+          state.confirms[player] = this.confirms[player];
+        }
       }
       break;
     case 8:
