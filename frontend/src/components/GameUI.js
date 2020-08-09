@@ -101,7 +101,7 @@ export default function GameUI({ state, socketRef, playerName, room }) {
           {state.narration}
           </h4>
       </div>
-        {state.game.state === 10 && (<button onClick={resetGame}>Reset Game</button>)}
+        {state.game.state > 9 && (<button onClick={resetGame}>Reset</button>)}
         {showConfirm && <button onClick={submitConfirm}>Confirm</button>}
       </ModelStyles>
     <UIStyles>

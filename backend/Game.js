@@ -120,11 +120,20 @@ Game.prototype.updateState = function (sendUpdate, room) {
   console.log('incrementing state');
   do {
     this.state++;
-    this.actions = [];
   }
   while (this.state < narrations.length - 2 && 
     !this.deck.includes(requiredConfirms[this.state]))
   this.updateConfirms(sendUpdate, room);
+  if (this.state === 10) {
+    const votes = {}
+    for (let i = 0; i < this.actions.length; i++) {
+      if (!votes[this.actions[i].action[1]]) {
+        votes[this.actions[i].action[1]] = 0;
+      }
+      votes[this.actions[i].action[1]] += 1;
+    }
+  }
+  this.actions = [];
   return sendUpdate(room);
 }
 
