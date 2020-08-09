@@ -86,7 +86,7 @@ export default function GameUI({ state, socketRef, playerName, room }) {
           <Card me={true} role={state.game.roles.playerRoles[playerName]}/>
         </div>
       <div className="otherPlayers">
-        {state.players.map((player) => (
+        {state.players.filter(player => player !== playerName).map((player) => (
          <div className="flx">
           <h4>{player}</h4>
             <Card player={true} />
