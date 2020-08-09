@@ -9,39 +9,40 @@ display: flex;
 flex-flow: column;
 justify-content: center;
 align-items: center;
-color: #2b262c;
+color: #feeeda;
 margin-top: 0;
 
 h1 {
     margin: 0 0 0.8rem 0;
     font-size: 2.5rem;
-    color: hotpink;
+    color: #feeeda;
 }
 h2 {
   text-align: center;
   font-weight: 600;
-  color: #2b262c;
+  color: #feeeda;
   margin: 0.5rem;
 }
 h4 {
   font-size: 18px;
   font-weight: 400;
-  color: #2b262c;
+  color: #feeeda;
   margin-top: 0;
   margin-bottom: 0;
 }
  button {
     font-size: 1.3rem;
     background: none;
-    border: 4px solid hotpink;
+    border: 4px solid #feeeda;
     border-radius: 10px;
     width: 9rem;
     height: 3rem;
     margin-top: 2rem;
     font-weight: 600;
-    color: hotpink;
+    color: #feeeda;
     cursor: pointer;
   }
+  
 `;
 
 export default function Room({ match, location }) {

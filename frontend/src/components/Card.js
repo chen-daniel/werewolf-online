@@ -19,7 +19,7 @@ const CardStyle = styled.div`
   border-radius: 13px;
   box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.15);
   display: flex;
-  color: #fff;
+  color: #feeeda;
   justify-content: center;
   align-items: center;
   h1 {

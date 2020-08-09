@@ -11,7 +11,7 @@ const HomeStyles = styled.div`
   align-items: center;
   align-content: center;
   height: 100vh;
-  color: hotpink;
+  color: #feeeda;
   .logo {
     margin: 0 0 1rem 0;
     font-size: 5rem;
@@ -19,13 +19,13 @@ const HomeStyles = styled.div`
   button {
     font-size: 1.3rem;
     background: none;
-    border: 4px solid hotpink;
+    border: 4px solid #feeeda;
     border-radius: 10px;
     width: 15rem;
     height: 4rem;
     margin-top: 2rem;
     font-weight: 600;
-    color: hotpink;
+    color: #feeeda;
     cursor: pointer;
   }
 
@@ -41,12 +41,13 @@ const InputStyle = styled.input`
   margin-top: 1rem;
   width: 15rem;
   height: 3rem;
-  border: 3px solid hotpink;
+  border: 3px solid #feeeda;
   border-radius: 7px;
-  color: hotpink;
+  color: #feeeda;
   font-size: 1.3rem;
   padding: 0 0.4rem;
   text-align: center;
+  background: transparent;
 `
 
 export default function Home() {

@@ -48,16 +48,15 @@ flex-flow: column;
 margin-top: 0;
 justify-content: center;
 align-items: center;
-color: #2b262c;
+color: #feeeda;
 
 h4 {
   margin: 0.6rem;
   font-size: 18px;
   font-weight: 400;
-  color: #2b262c;
 }
 h4.turn {
-  color: #f31431
+  color: #feeeda
 }
  button {
     font-size: 1rem;
