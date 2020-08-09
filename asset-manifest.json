@@ -1,30 +1,32 @@
 {
   "files": {
     "main.css": "/werewolf-online/static/css/main.5f361e03.chunk.css",
-    "main.js": "/werewolf-online/static/js/main.8ebb70e7.chunk.js",
-    "main.js.map": "/werewolf-online/static/js/main.8ebb70e7.chunk.js.map",
+    "main.js": "/werewolf-online/static/js/main.199c050b.chunk.js",
+    "main.js.map": "/werewolf-online/static/js/main.199c050b.chunk.js.map",
     "runtime-main.js": "/werewolf-online/static/js/runtime-main.69d01ce0.js",
     "runtime-main.js.map": "/werewolf-online/static/js/runtime-main.69d01ce0.js.map",
-    "static/js/2.5dcded90.chunk.js": "/werewolf-online/static/js/2.5dcded90.chunk.js",
-    "static/js/2.5dcded90.chunk.js.map": "/werewolf-online/static/js/2.5dcded90.chunk.js.map",
+    "static/js/2.b98ca73d.chunk.js": "/werewolf-online/static/js/2.b98ca73d.chunk.js",
+    "static/js/2.b98ca73d.chunk.js.map": "/werewolf-online/static/js/2.b98ca73d.chunk.js.map",
     "index.html": "/werewolf-online/index.html",
-    "precache-manifest.7a4eb7f2ed6d7bedc2ed92916492f636.js": "/werewolf-online/precache-manifest.7a4eb7f2ed6d7bedc2ed92916492f636.js",
+    "precache-manifest.489e33c62133b0a5008c825ab099905c.js": "/werewolf-online/precache-manifest.489e33c62133b0a5008c825ab099905c.js",
     "service-worker.js": "/werewolf-online/service-worker.js",
     "static/css/main.5f361e03.chunk.css.map": "/werewolf-online/static/css/main.5f361e03.chunk.css.map",
-    "static/js/2.5dcded90.chunk.js.LICENSE.txt": "/werewolf-online/static/js/2.5dcded90.chunk.js.LICENSE.txt",
+    "static/js/2.b98ca73d.chunk.js.LICENSE.txt": "/werewolf-online/static/js/2.b98ca73d.chunk.js.LICENSE.txt",
     "static/media/Back.jpg": "/werewolf-online/static/media/Back.7173fe1b.jpg",
     "static/media/cat-burglar.jpg": "/werewolf-online/static/media/cat-burglar.edac0a66.jpg",
     "static/media/drunk.jpg": "/werewolf-online/static/media/drunk.f2191f54.jpg",
     "static/media/insomnicat.jpg": "/werewolf-online/static/media/insomnicat.d0fbb758.jpg",
-    "static/media/minion.jpg": "/werewolf-online/static/media/minion.29645442.jpg",
+    "static/media/minion.jpg": "/werewolf-online/static/media/minion.0f7fde36.jpg",
     "static/media/seer.jpg": "/werewolf-online/static/media/seer.deaefacf.jpg",
     "static/media/siamese-twin.jpg": "/werewolf-online/static/media/siamese-twin.7cda16de.jpg",
+    "static/media/troublemaker.jpg": "/werewolf-online/static/media/troublemaker.dac79b04.jpg",
+    "static/media/villager.jpg": "/werewolf-online/static/media/villager.8528ccb0.jpg",
     "static/media/werecat.jpg": "/werewolf-online/static/media/werecat.6a7b9af6.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.69d01ce0.js",
-    "static/js/2.5dcded90.chunk.js",
+    "static/js/2.b98ca73d.chunk.js",
     "static/css/main.5f361e03.chunk.css",
-    "static/js/main.8ebb70e7.chunk.js"
+    "static/js/main.199c050b.chunk.js"
   ]
 }
