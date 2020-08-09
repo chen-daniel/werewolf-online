@@ -5,10 +5,10 @@ const defaultDeckOpts = {
   minion: false,
   masons: false,
   seer: true,
-  robber: true,
+  'cat burglar': true,
   troublemaker: true,
   drunk: false,
-  insomniac: false
+  insomnicat: false
 }
 
 function Room() {

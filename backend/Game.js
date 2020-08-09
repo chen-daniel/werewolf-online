@@ -11,7 +11,7 @@ const narrations = [
   "Cat Burglar, you may choose another player to exchange cards with and confirm.",
   "Troublemaker, you may choose two players to change cards.",
   "Drunk, pick a card from the center to exchange with.",
-  "Insomniac, you may check your current role.",
+  "Insomnicat, you may check your current role.",
   // "Doppelganger, if you are now an Insomniac, you may check your current role.",
   "The day has begun, discuss and vote before the timer ends."
 ];
@@ -92,7 +92,7 @@ Game.prototype.submitConfirm = function (name) {
 Game.prototype.updateConfirms = async function (sendUpdate, room) {
   let flag = false;
   for (const player in this.confirms) {
-    if (this.roles.playerRoles[player] === requiredConfirms[this.state]) {
+    if (this.startingRoles.playerRoles[player] === requiredConfirms[this.state]) {
       flag = true;
       this.confirms[player] = false;
     }
