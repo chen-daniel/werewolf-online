@@ -54,7 +54,7 @@ export default function Home() {
     const [nameInput, setNameInput] = React.useState('');
     return (
       <HomeStyles className="App">
-        <h1 className="logo">Werewolf Online</h1>
+        <h1 className="logo">Werecat Online</h1>
         <div>
             <InputStyle type="text" value={nameInput} placeholder="Join as" onChange={(e) => setNameInput(e.target.value)} />
         </div>
