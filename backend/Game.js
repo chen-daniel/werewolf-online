@@ -101,7 +101,6 @@ Game.prototype.updateConfirms = async function (sendUpdate, room) {
 }
 
 Game.prototype.updateState = function (sendUpdate, room) {
-  console.log(this.confirms);
   const players = Object.keys(this.confirms);
   for (let i = 0; i < players.length; i++) {
     if (!this.confirms[players[i]]) {
@@ -117,6 +116,136 @@ Game.prototype.updateState = function (sendUpdate, room) {
     !this.deck.includes(requiredConfirms[this.state]))
   this.updateConfirms(sendUpdate, room);
   return sendUpdate(room);
+}
+
+Game.prototype.playerUIState = function (player) {
+  const state = {};
+  state.deck = this.deck;
+  state.state = this.state;
+  state.confirms = {};
+  state.roles = { playerRoles: {}, center: {} };
+  switch (this.state) {
+    case 0:
+      // Start game
+      state.roles.playerRoles[player] = this.roles.playerRoles[player];
+      state.confirms[player] = this.confirms[player]
+      break;
+    case 1:
+      // Werewolf
+      if (this.roles.playerRoles[player] === requiredConfirms[this.state]) {
+        for (const otherPlayer in this.roles.playerRoles) {
+          if (otherPlayer !== player && this.roles.playerRoles[otherPlayer] === requiredConfirms[this.state]) {
+            state.roles.playerRoles[otherPlayer] = this.roles.playerRoles[otherPlayer];
+          }
+        }
+        state.confirms[player] = this.confirms[player];
+      }
+      break;
+    case 2:
+      // Minion
+      if (this.roles.playerRoles[player] === requiredConfirms[this.state]) {
+        for (const otherPlayer in this.roles.playerRoles) {
+          if (this.roles.playerRoles[otherPlayer] === 'werewolf') {
+            state.roles.playerRoles[otherPlayer] = this.roles.playerRoles[otherPlayer];
+          }
+        }
+        state.confirms[player] = this.confirms[player];
+      }
+      break;
+    case 3:
+      // Mason
+      if (this.roles.playerRoles[player] === requiredConfirms[this.state]) {
+        for (const otherPlayer in this.roles.playerRoles) {
+          if (otherPlayer !== player && this.roles.playerRoles[otherPlayer] === requiredConfirms[this.state]) {
+            state.roles.playerRoles[otherPlayer] = this.roles.playerRoles[otherPlayer];
+          }
+        }
+        state.confirms[player] = this.confirms[player];
+      }
+      break;
+    case 4:
+      // Seer
+      if (this.roles.playerRoles[player] === requiredConfirms[this.state]) {
+        state.confirms[player] = this.confirms[player];
+      }
+      break;
+    case 5:
+      // Robber
+      if (this.roles.playerRoles[player] === requiredConfirms[this.state]) {
+        state.confirms[player] = this.confirms[player];
+      }
+      break;
+    case 6:
+      // Troublemaker
+      if (this.roles.playerRoles[player] === requiredConfirms[this.state]) {
+        state.confirms[player] = this.confirms[player];
+      }
+      break;
+    case 7:
+      // Drunk
+      if (this.roles.playerRoles[player] === requiredConfirms[this.state]) {
+        state.confirms[player] = this.confirms[player];
+      }
+      break;
+    case 8:
+      // Insomniac
+      if (this.roles.playerRoles[player] === requiredConfirms[this.state]) {
+        state.roles.playerRoles[player] = this.roles.playerRoles[player];
+        state.confirms[player] = this.confirms[player];
+      }
+      break;
+    default:
+      // Day
+      state.roles.playerRoles[player] = this.roles.playerRoles[player];
+      state.confirms[player] = this.confirms[player]
+  }
+  if (this.state === 0) {
+    // Start game
+    state.roles.playerRoles[player] = this.roles.playerRoles[player];
+    state.confirms[player] = this.confirms[player]
+  } else if (this.state === 1) {
+    // Werewolf
+    if (this.roles.playerRoles[player] === requiredConfirms[this.state]) {
+      state.confirms[player] = this.confirms[player];
+    }
+  } else if (this.state === 2) {
+    // Minion
+    if (this.roles.playerRoles[player] === requiredConfirms[this.state]) {
+      state.confirms[player] = this.confirms[player];
+    }
+  } else if (this.state === 3) {
+    // Mason
+    if (this.roles.playerRoles[player] === requiredConfirms[this.state]) {
+      state.confirms[player] = this.confirms[player];
+    }
+  } else if (this.state === 4) {
+    // Seer
+    if (this.roles.playerRoles[player] === requiredConfirms[this.state]) {
+      state.confirms[player] = this.confirms[player];
+    }
+  } else if (this.state === 5) {
+    // Robber
+    if (this.roles.playerRoles[player] === requiredConfirms[this.state]) {
+      state.confirms[player] = this.confirms[player];
+    }
+  } else if (this.state === 6) {
+    // Troublemaker
+    if (this.roles.playerRoles[player] === requiredConfirms[this.state]) {
+      state.confirms[player] = this.confirms[player];
+    }
+  } else if (this.state === 7) {
+    // Drunk
+    if (this.roles.playerRoles[player] === requiredConfirms[this.state]) {
+      state.confirms[player] = this.confirms[player];
+    }
+  } else if (this.state === 8) {
+    // Insomniac
+    if (this.roles.playerRoles[player] === requiredConfirms[this.state]) {
+      state.confirms[player] = this.confirms[player];
+    }
+  } 
+
+  return state;
 }
 
 module.exports = Game;

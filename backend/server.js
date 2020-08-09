@@ -1,6 +1,7 @@
 const express = require('express');
 const http = require("http");
 const socket = require('socket.io');
+const { cloneDeep } = require('lodash');
 const Room = require('./Room');
 const { generateRoomCode } = require('./utils');
 const app = express();
@@ -50,6 +51,22 @@ io.on("connection", socket => {
     }
   }
 
+  function playerUIState(uiState, player) {
+    const stateCopy = cloneDeep(uiState);
+    stateCopy.game = uiState.game.playerUIState(player);
+    return stateCopy;
+  }
+
+  function updateAllGame(room, uiState) {
+    for (const player in room.players) {
+      if (socket.id === room.players[player]) {
+        socket.emit("update state", playerUIState(uiState, player));
+      } else {
+        socket.to(room.players[player]).emit("update state", playerUIState(uiState, player));
+      }
+    }
+  }
+
   socket.on("join room", payload => {
     const room = rooms[payload.room];
 
@@ -92,7 +109,7 @@ io.on("connection", socket => {
       roomState: room.roomState,
       narration: room.gameState.narration()
     }
-    updateAll(room, uiState);
+    updateAllGame(room, uiState);
   });
 
   socket.on('submit confirm', payload => {
@@ -108,9 +125,13 @@ io.on("connection", socket => {
         roomState: room.roomState,
         narration: room.gameState.narration()
       }
-      updateAll(room, uiState);
+      updateAllGame(room, uiState);
     }
     room.gameState.updateState(sendUpdate, room);
+  });
+
+  socket.on('perform action', payload => {
+
   });
 });
 
