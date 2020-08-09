@@ -13,7 +13,8 @@ const narrations = [
   "Drunk, pick a card from the center to exchange with and confirm.",
   "Insomnicat, you may check your current role and confirm.",
   // "Doppelganger, if you are now an Insomniac, you may check your current role.",
-  "The day has begun, discuss and vote before the timer ends."
+  "The day has begun, discuss and vote, then confirm.",
+  "Final reveal."
 ];
 
 const requiredConfirms = [
@@ -28,7 +29,8 @@ const requiredConfirms = [
   'drunk',
   'insomnicat',
   // 'doppelganger',
-  'all'
+  'all',
+  'none'
 ]
 
 function buildDeck(opts, numPlayers) {
@@ -90,7 +92,7 @@ Game.prototype.submitConfirm = function (name) {
 }
 
 Game.prototype.updateConfirms = async function (sendUpdate, room) {
-  if (this.state === narrations.length - 1) {
+  if (this.state === narrations.length - 2) {
     this.confirms = resetConfirms(Object.keys(this.confirms));
     return;
   }
@@ -101,7 +103,7 @@ Game.prototype.updateConfirms = async function (sendUpdate, room) {
       this.confirms[player] = false;
     }
   }
-  if (!flag && this.state < narrations.length - 1) {
+  if (!flag && this.state < narrations.length - 2) {
     await new Promise(resolve => setTimeout(resolve, Math.random() * (10000 - 6000) + 6000));
     return this.updateState(sendUpdate, room);
   }
@@ -120,7 +122,7 @@ Game.prototype.updateState = function (sendUpdate, room) {
     this.state++;
     this.actions = [];
   }
-  while (this.state < narrations.length - 1 && 
+  while (this.state < narrations.length - 2 && 
     !this.deck.includes(requiredConfirms[this.state]))
   this.updateConfirms(sendUpdate, room);
   return sendUpdate(room);
@@ -332,13 +334,14 @@ Game.prototype.playerUIState = function (player) {
     case 9:
       // Day
       // state.roles.playerRoles[player] = this.roles.playerRoles[player];
-      state.confirms[player] = this.confirms[player];
       state.actions = this.actions.filter((action) => action.player === player);
       if (state.actions.length > 0) {
         state.actions = state.actions[0].action;
+        state.confirms[player] = this.confirms[player];
       }
       break;
     default:
+      state.roles = this.roles;
       break;
   }
 
