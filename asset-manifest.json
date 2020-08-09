@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/werewolf-online/static/css/main.2a5ebab4.chunk.css",
-    "main.js": "/werewolf-online/static/js/main.2de8983a.chunk.js",
-    "main.js.map": "/werewolf-online/static/js/main.2de8983a.chunk.js.map",
+    "main.js": "/werewolf-online/static/js/main.0df50450.chunk.js",
+    "main.js.map": "/werewolf-online/static/js/main.0df50450.chunk.js.map",
     "runtime-main.js": "/werewolf-online/static/js/runtime-main.69d01ce0.js",
     "runtime-main.js.map": "/werewolf-online/static/js/runtime-main.69d01ce0.js.map",
     "static/js/2.b98ca73d.chunk.js": "/werewolf-online/static/js/2.b98ca73d.chunk.js",
     "static/js/2.b98ca73d.chunk.js.map": "/werewolf-online/static/js/2.b98ca73d.chunk.js.map",
     "index.html": "/werewolf-online/index.html",
-    "precache-manifest.77d6d11f6eeb5bd954c57992c7f7d839.js": "/werewolf-online/precache-manifest.77d6d11f6eeb5bd954c57992c7f7d839.js",
+    "precache-manifest.694027cec824e82b85a8dd72148201fa.js": "/werewolf-online/precache-manifest.694027cec824e82b85a8dd72148201fa.js",
     "service-worker.js": "/werewolf-online/service-worker.js",
     "static/css/main.2a5ebab4.chunk.css.map": "/werewolf-online/static/css/main.2a5ebab4.chunk.css.map",
     "static/js/2.b98ca73d.chunk.js.LICENSE.txt": "/werewolf-online/static/js/2.b98ca73d.chunk.js.LICENSE.txt",
@@ -27,6 +27,6 @@
     "static/js/runtime-main.69d01ce0.js",
     "static/js/2.b98ca73d.chunk.js",
     "static/css/main.2a5ebab4.chunk.css",
-    "static/js/main.2de8983a.chunk.js"
+    "static/js/main.0df50450.chunk.js"
   ]
 }
