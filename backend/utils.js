@@ -1,5 +1,5 @@
 const roomCodeLength = 4;
-const roomCodeChars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const roomCodeChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 function generateRoomCode(rooms) {
   result = '';
