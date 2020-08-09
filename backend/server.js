@@ -53,7 +53,9 @@ io.on("connection", socket => {
 
   function playerUIState(uiState, player) {
     const stateCopy = cloneDeep(uiState);
+    stateCopy.turn = uiState.game.turn(player);
     stateCopy.game = uiState.game.playerUIState(player);
+    stateCopy.startingRole = uiState.game.startingRoles[player];
     return stateCopy;
   }
 

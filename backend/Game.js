@@ -4,14 +4,14 @@ const { cloneDeep } = require('lodash');
 const narrations = [
   "Game has begun, please confirm your role.",
   // "Doppelganger, wake up and look at another player's card. You are now that role. If your new role has a night application, do it now.",
-  "Werecats, look for other werecats. If there is no other werecat, select a card from the center to see.",
-  "Minion, look for the werewolves and confirm.",
-  "Masons, look for other Masons and confirm.",
+  "Werecats, look for other Werecats and confirm. If there is no other werecat, select a card from the center to see and confirm.",
+  "Minion, look for the Werecats and confirm.",
+  "Masons, look for other Masons and confirm. If there is no other mason, select a card from the center to see and confirm.",
   "Seer, You make look at one player's card, or two cards from the center.",
   "Cat Burglar, you may choose another player to exchange cards with and confirm.",
   "Troublemaker, you may choose two players to change cards.",
-  "Drunk, pick a card from the center to exchange with.",
-  "Insomnicat, you may check your current role.",
+  "Drunk, pick a card from the center to exchange with and confirm.",
+  "Insomnicat, you may check your current role and confirm.",
   // "Doppelganger, if you are now an Insomniac, you may check your current role.",
   "The day has begun, discuss and vote before the timer ends."
 ];
@@ -119,11 +119,15 @@ Game.prototype.updateState = function (sendUpdate, room) {
   while (this.state < narrations.length - 1 && 
     !this.deck.includes(requiredConfirms[this.state]))
   this.updateConfirms(sendUpdate, room);
+  if (this.state === narrations.length - 1) {
+
+
+  }
   return sendUpdate(room);
 }
 
 Game.prototype.performAction = function (player, action) {
-  if (this.startingRoles.playerRoles[player] === requiredConfirms[this.state]) {
+  if (this.startingRoles.playerRoles[player] === requiredConfirms[this.state] || requiredConfirms[this.state] === 'all') {
     let flag;
     switch (this.state) {
       case 1:
@@ -197,6 +201,12 @@ Game.prototype.performAction = function (player, action) {
           this.roles.center[action[1]] = swap;
         }
         break;
+      case 9:
+        console.log('performing vote action');
+        if (action[0] === 'playerRoles') {
+          this.actions = this.actions.filter(vote => vote.player === player);
+          this.actions.push({ player, action });
+        }
       default:
         break;
     }
@@ -321,6 +331,10 @@ Game.prototype.playerUIState = function (player) {
   }
 
   return state;
+}
+
+Game.prototype.turn = function (player) {
+  return this.roles.playerRoles[player] === requiredConfirms[this.state];
 }
 
 module.exports = Game;

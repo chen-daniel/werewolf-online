@@ -56,6 +56,9 @@ h4 {
   font-weight: 400;
   color: #2b262c;
 }
+h4.turn {
+  color: #f31431
+}
  button {
     font-size: 1rem;
     background: none;
@@ -88,7 +91,7 @@ export default function GameUI({ state, socketRef, playerName, room }) {
           <strong>Deck | </strong>
           {JSON.stringify(state.game.deck)}
           </h4>
-          <h4>
+          <h4 className={`${state.turn ? 'turn' : ''}`}>
           <strong>Narration | </strong>
           {state.narration}
           </h4>
