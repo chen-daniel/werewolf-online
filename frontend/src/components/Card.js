@@ -12,7 +12,7 @@ const CardStyle = styled.div`
   justify-content: center;
   align-items: center;
   h1 {
-    font-size: 2.5rem;
+    font-size: 1.4rem;
     margin: 0;
     padding: 0;
     line-height: 1;
