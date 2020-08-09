@@ -1,17 +1,19 @@
 import React from 'react';
 import styled from 'styled-components'
 import Card from './Card'
+
 const UIStyles = styled.div`
-   margin-top: 5%;
-  margin-right: 10%;
+  margin-top: 2%;
+  margin-right: 20%;
+  margin-left: 20%;
   display: grid;
   justify-content: center;
   align-content: center;
   align-items: center;
   justify-items: center;
-   grid-template-columns: 0.4fr 0.6fr;
-   grid-template-rows: 0.7fr 0.3fr;
-   grid-template-areas: 
+  grid-template-columns: 0.3fr 0.7fr;
+  grid-template-rows: 0.7fr 0.3fr;
+  grid-template-areas: 
     "leftSide header"
     "leftSide  rightSide";
   div {
@@ -41,25 +43,35 @@ const UIStyles = styled.div`
 `
 
 const ModelStyles = styled.div`
-
 display: flex;
 flex-flow: column;
-margin-top: 1rem;
+margin-top: 0;
 justify-content: center;
 align-items: center;
 color: #2b262c;
 
 h4 {
+  margin: 0.6rem;
   font-size: 18px;
   font-weight: 400;
   color: #2b262c;
 }
+ button {
+    font-size: 1rem;
+    background: none;
+    border: 4px solid hotpink;
+    border-radius: 10px;
+    width: 7rem;
+    height: 2.3rem;
+    margin-top: 1rem;
+    font-weight: 600;
+    color: hotpink;
+    cursor: pointer;
+  }
 
 `
 
-
 export default function GameUI({ state, socketRef, playerName, room }) {
-  const player = ['P1','P2','P3','P4']
   function submitConfirm() {
     socketRef.current.emit('submit confirm', { room, playerName });
   }
@@ -71,14 +83,16 @@ export default function GameUI({ state, socketRef, playerName, room }) {
   return (
     <React.Fragment>
       <ModelStyles>
-        <h4>
-         <strong>Deck | </strong>
-        {JSON.stringify(state.game.deck)}
-        </h4>
-        <h4>
-        <strong>Narration | </strong>
-        {state.narration}
-        </h4>
+        <div>
+          <h4>
+          <strong>Deck | </strong>
+          {JSON.stringify(state.game.deck)}
+          </h4>
+          <h4>
+          <strong>Narration | </strong>
+          {state.narration}
+          </h4>
+      </div>
         {showConfirm && <button onClick={submitConfirm}>Confirm</button>}
       </ModelStyles>
     <UIStyles>

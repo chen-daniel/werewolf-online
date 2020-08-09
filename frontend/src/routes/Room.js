@@ -1,7 +1,48 @@
 import React, { useEffect } from 'react';
+import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
 import { connectSocket } from '../utils/api';
 import GameUI from '../components/GameUI';
+
+const ModelStyles = styled.div`
+display: flex;
+flex-flow: column;
+justify-content: center;
+align-items: center;
+color: #2b262c;
+margin-top: 0;
+
+h1 {
+    margin: 0 0 0.8rem 0;
+    font-size: 2.5rem;
+    color: hotpink;
+}
+h2 {
+  text-align: center;
+  font-weight: 600;
+  color: #2b262c;
+  margin: 0.5rem;
+}
+h4 {
+  font-size: 18px;
+  font-weight: 400;
+  color: #2b262c;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+ button {
+    font-size: 1.3rem;
+    background: none;
+    border: 4px solid hotpink;
+    border-radius: 10px;
+    width: 9rem;
+    height: 3rem;
+    margin-top: 2rem;
+    font-weight: 600;
+    color: hotpink;
+    cursor: pointer;
+  }
+`;
 
 export default function Room({ match, location }) {
     const room = match.params.roomID;
@@ -29,35 +70,44 @@ export default function Room({ match, location }) {
     }
 
     return (
-        <div>
+      <div>
+        <ModelStyles>
             <div>
                 {!playerName && <Redirect to={'/'} />}
-                This is room {room}.
-                <br />
-                Your name is {playerName}.
+                 <h1>
+                 Room: {room}
+                </h1>
+                <h2>
+                 - {playerName} -
+                </h2>
             </div>
             <div>
-                Players in room:
-                {JSON.stringify(uiState.players)}
+              <h4>
+              <strong>
+                Players | 
+              </strong>
+              {JSON.stringify(uiState.players)}
+            </h4>
             </div>
             {uiState.roomState !== 'started' && uiState.deckOpts && (
-                <div>
+              <div>
                     <ul>
                         {Object.keys(uiState.deckOpts).map((opt, i) => (
-                        <li key={i}>
+                          <li key={i}>
                             <input 
                                 type="radio" 
                                 value={opt} 
                                 checked={uiState.deckOpts[opt]} 
                                 onClick={handleOptChange}
                                 onChange={(e) => console.log(e)}
-                            /> {opt}
+                                /> {opt}
                         </li>))}
                     </ul>
                 </div>
             )}
             {uiState.roomState === 'ready' && <button onClick={startGame}>Start Game</button>}
-            {uiState.roomState === 'started' && <GameUI state={uiState} playerName={playerName} room={room} socketRef={socketRef}/>}
+          </ModelStyles>
+          {uiState.roomState === 'started' && <GameUI state={uiState} playerName={playerName} room={room} socketRef={socketRef}/>}
         </div>
     )
 }
