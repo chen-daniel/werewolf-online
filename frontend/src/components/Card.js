@@ -20,29 +20,34 @@ const CardStyle = styled.div`
 
   ${(props) => props.me &&
     css`
-    height: 35rem;
-    width: 21rem;
+    height: 27rem;
+    width: 17rem;
    border: 5px solid deeppink;
   `}
   ${(props) => props.deck &&
     css`
-    height: 11rem;
-    width: 8rem;
+    height: 9rem;
+    width: 6rem;
     border: 5px solid darkcyan;
   `}
   ${(props) => props.player &&
     css`
     border: 5px solid purple;
-    height: 17rem;
-    width: 11rem;
+    height: 12rem;
+    width: 8rem;
   `}
+  ${(props) => props.werewolf && props.role === "werewolf" ?  css` 
+    border: 10px solid black;
+  `
+  : null
+  }
 `
 
-const Card = ({me, deck, player, role}) => {
+const Card = ({me, deck, player, role, werewolf, name}) => {
 
   return (
-    <CardStyle me={me} player={player} deck={deck}>
-      <h1>{role ? role.toUpperCase() : "X"}</h1>
+    <CardStyle me={me} player={player} deck={deck} name={name} role={role} werewolf={werewolf}>
+      <h1>{name ? name.toUpperCase() : "X"}</h1>
     </CardStyle>
   )
 }
