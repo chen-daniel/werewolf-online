@@ -90,6 +90,10 @@ Game.prototype.submitConfirm = function (name) {
 }
 
 Game.prototype.updateConfirms = async function (sendUpdate, room) {
+  if (this.state === narrations.length - 1) {
+    this.confirms = resetConfirms(Object.keys(this.confirms));
+    return;
+  }
   let flag = false;
   for (const player in this.confirms) {
     if (this.startingRoles.playerRoles[player] === requiredConfirms[this.state]) {
@@ -119,10 +123,6 @@ Game.prototype.updateState = function (sendUpdate, room) {
   while (this.state < narrations.length - 1 && 
     !this.deck.includes(requiredConfirms[this.state]))
   this.updateConfirms(sendUpdate, room);
-  if (this.state === narrations.length - 1) {
-
-
-  }
   return sendUpdate(room);
 }
 
@@ -329,14 +329,17 @@ Game.prototype.playerUIState = function (player) {
         state.confirms[player] = this.confirms[player];
       }
       break;
-    default:
+    case 9:
       // Day
-      state.roles.playerRoles[player] = this.roles.playerRoles[player];
+      // state.roles.playerRoles[player] = this.roles.playerRoles[player];
       state.confirms[player] = this.confirms[player];
       state.actions = this.actions.filter((action) => action.player === player);
       if (state.actions.length > 0) {
         state.actions = state.actions[0].action;
       }
+      break;
+    default:
+      break;
   }
 
   return state;
