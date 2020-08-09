@@ -129,6 +129,10 @@ io.on("connection", socket => {
     }
     room.gameState.updateState(sendUpdate, room);
   });
+
+  socket.on('perform action', payload => {
+
+  });
 });
 
 server.listen(port, () => {

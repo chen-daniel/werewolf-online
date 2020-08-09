@@ -133,18 +133,33 @@ Game.prototype.playerUIState = function (player) {
     case 1:
       // Werewolf
       if (this.roles.playerRoles[player] === requiredConfirms[this.state]) {
+        for (const otherPlayer in this.roles.playerRoles) {
+          if (otherPlayer !== player && this.roles.playerRoles[otherPlayer] === requiredConfirms[this.state]) {
+            state.roles.playerRoles[otherPlayer] = this.roles.playerRoles[otherPlayer];
+          }
+        }
         state.confirms[player] = this.confirms[player];
       }
       break;
     case 2:
       // Minion
       if (this.roles.playerRoles[player] === requiredConfirms[this.state]) {
+        for (const otherPlayer in this.roles.playerRoles) {
+          if (this.roles.playerRoles[otherPlayer] === 'werewolf') {
+            state.roles.playerRoles[otherPlayer] = this.roles.playerRoles[otherPlayer];
+          }
+        }
         state.confirms[player] = this.confirms[player];
       }
       break;
     case 3:
       // Mason
       if (this.roles.playerRoles[player] === requiredConfirms[this.state]) {
+        for (const otherPlayer in this.roles.playerRoles) {
+          if (otherPlayer !== player && this.roles.playerRoles[otherPlayer] === requiredConfirms[this.state]) {
+            state.roles.playerRoles[otherPlayer] = this.roles.playerRoles[otherPlayer];
+          }
+        }
         state.confirms[player] = this.confirms[player];
       }
       break;

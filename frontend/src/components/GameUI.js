@@ -84,13 +84,13 @@ export default function GameUI({ state, socketRef, playerName, room }) {
         <Card deck={true}/>
       </div>
         <div className="me"> 
-          <Card me={true} role={state.game.roles.playerRoles[playerName]}/>
+          <Card me={true} role={state.game.roles.playerRoles[playerName]} />
         </div>
       <div className="otherPlayers">
         {state.players.filter(player => player !== playerName).map((player) => (
          <div className="flx">
           <h4>{player}</h4>
-            <Card player={true} />
+            <Card player={true} role={state.game.roles.playerRoles[player]} />
         </div>
       ))}
       </div>
