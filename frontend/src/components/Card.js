@@ -8,6 +8,8 @@ import drunk from '../assets/drunk.jpg'
 import minion from '../assets/minion.jpg'
 import catBurglar from '../assets/cat-burglar.jpg'
 import siameseTwin from '../assets/siamese-twin.jpg'
+import troublemaker from '../assets/troublemaker.jpg'
+import villager from '../assets/villager.jpg'
 
 
 const CardStyle = styled.div`
@@ -29,6 +31,26 @@ const CardStyle = styled.div`
 
 
 
+  ${(props) => props.me &&
+    css`
+    height: 27rem;
+    width: 17rem;
+   border: 5px solid deeppink;
+  `}
+  ${(props) => props.deck &&
+    css`
+    height: 9rem;
+    width: 6rem;
+    border: 5px solid darkcyan;
+  `}
+  ${(props) => props.player &&
+    css`
+    border: 5px solid purple;
+    height: 12rem;
+    width: 8rem;
+  `}
+
+    /*  BG-Images  */
   ${({role}) => !role ? 
     css`
       background: url(${back}) no-repeat center center/cover;
@@ -57,24 +79,14 @@ const CardStyle = styled.div`
       background: url(${siameseTwin}) no-repeat center center/cover;
     `
   } 
-  ${(props) => props.me &&
+  ${({role}) => role === "troublemaker" ?
     css`
-    height: 27rem;
-    width: 17rem;
-   border: 5px solid deeppink;
-  `}
-  ${(props) => props.deck &&
-    css`
-    height: 9rem;
-    width: 6rem;
-    border: 5px solid darkcyan;
-  `}
-  ${(props) => props.player &&
-    css`
-    border: 5px solid purple;
-    height: 12rem;
-    width: 8rem;
-  `}
+      background: url(${troublemaker}) no-repeat center center/cover;
+    ` : role === "villager" && css`
+      background: url(${villager}) no-repeat center center/cover;
+    ` 
+  } 
+  /* End BG-Images  */
 `
 
 const Card = ({me, deck, player, role, onClick }) => {
