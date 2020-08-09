@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "aad49afec558433644aaad799c651b48",
+    "revision": "3236772a9cf5970b19bcd69028361769",
     "url": "/werewolf-online/index.html"
   },
   {
-    "revision": "87e310db72d02297424d",
-    "url": "/werewolf-online/static/css/main.5f361e03.chunk.css"
+    "revision": "a044ac8f398889f35b28",
+    "url": "/werewolf-online/static/css/main.2a5ebab4.chunk.css"
   },
   {
     "revision": "e0df42c0ec381bc15ab8",
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/werewolf-online/static/js/2.b98ca73d.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "87e310db72d02297424d",
-    "url": "/werewolf-online/static/js/main.76b1f19f.chunk.js"
+    "revision": "a044ac8f398889f35b28",
+    "url": "/werewolf-online/static/js/main.2de8983a.chunk.js"
   },
   {
     "revision": "60eb1a453bd765b6369f",
