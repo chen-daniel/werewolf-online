@@ -75,12 +75,16 @@ const CardStyle = styled.div`
     height: 12rem;
     width: 8rem;
   `}
+  ${(props) => props.selected &&
+    css`
+    border-width: 8px;
+  `}
 `
 
-const Card = ({me, deck, player, role, onClick }) => {
+const Card = ({me, deck, player, role, onClick, selected }) => {
 
   return (
-    <CardStyle me={me} player={player} deck={deck} onClick={onClick} role={role}>
+    <CardStyle me={me} player={player} deck={deck} onClick={onClick} role={role} selected={selected}>
       {/* <h1>{role ? role.toUpperCase() : "X"}</h1> */}
       <></>
     </CardStyle>

@@ -105,6 +105,7 @@ export default function GameUI({ state, socketRef, playerName, room }) {
             deck={true}
             role={state.game.roles.center[i]}
             onClick={() => performAction(['center', i])}
+            selected={state.game.actions && state.game.actions.filter(action => action[0] === 'center' && action[1] === i).length > 0}
             key={i}
           />
         ))}
@@ -120,6 +121,7 @@ export default function GameUI({ state, socketRef, playerName, room }) {
               player={true} 
               role={state.game.roles.playerRoles[player]}
               onClick={() => performAction(['playerRoles', player])}
+              selected={state.game.actions && state.game.actions.filter(action => action[0] === 'playerRoles' && action[1] === player).length > 0}
             />
         </div>
       ))}

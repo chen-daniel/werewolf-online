@@ -204,7 +204,7 @@ Game.prototype.performAction = function (player, action) {
       case 9:
         console.log('performing vote action');
         if (action[0] === 'playerRoles') {
-          this.actions = this.actions.filter(vote => vote.player === player);
+          this.actions = this.actions.filter(vote => vote.player !== player);
           this.actions.push({ player, action });
         }
       default:
@@ -238,9 +238,10 @@ Game.prototype.playerUIState = function (player) {
           }
         }
         if (!flag) {
-          if (this.actions.length == 1) {
+          if (this.actions.length === 1) {
             state.roles.center[this.actions[0][1]] = this.roles.center[this.actions[0][1]];
             state.confirms[player] = this.confirms[player];
+            state.actions = this.actions;
           } 
         }
       }
@@ -272,6 +273,7 @@ Game.prototype.playerUIState = function (player) {
           if (this.actions.length === 1) {
             state.roles.center[this.actions[0][1]] = this.roles.center[this.actions[0][1]];
             state.confirms[player] = this.confirms[player];
+            state.actions = this.actions;
           } 
         }
       }
@@ -291,6 +293,7 @@ Game.prototype.playerUIState = function (player) {
               state.confirms[player] = this.confirms[player];
             }
           }
+          state.actions = this.actions;
         }
       }
       break;
@@ -307,6 +310,7 @@ Game.prototype.playerUIState = function (player) {
       // Troublemaker
       if (this.startingRoles.playerRoles[player] === requiredConfirms[this.state]) {
         state.confirms[player] = this.confirms[player];
+        state.actions = this.actions;
       }
       break;
     case 7:
@@ -314,6 +318,7 @@ Game.prototype.playerUIState = function (player) {
       if (this.startingRoles.playerRoles[player] === requiredConfirms[this.state]) {
         if (this.actions.length === 1) {
           state.confirms[player] = this.confirms[player];
+          state.actions = this.actions;
         }
       }
       break;
@@ -327,7 +332,11 @@ Game.prototype.playerUIState = function (player) {
     default:
       // Day
       state.roles.playerRoles[player] = this.roles.playerRoles[player];
-      state.confirms[player] = this.confirms[player]
+      state.confirms[player] = this.confirms[player];
+      state.actions = this.actions.filter((action) => action.player === player);
+      if (state.actions.length > 0) {
+        state.actions = state.actions[0].action;
+      }
   }
 
   return state;
